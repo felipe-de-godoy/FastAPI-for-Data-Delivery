@@ -1,15 +1,32 @@
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt 
+uvicorn main:app --reload
+aws sts get-caller-identity
+eksctl create cluster --name=minimal-cluster --region=us-east-1 --nodegroup-name=minimal-nodes --node-type=t3.micro --nodes=1 --nodes-min=1 --nodes-max=2 --node-volume-size=10 --managed
+aws ecr create-repository --repository-name my-fastapi-app --region us-east-1
+docker build -t my-fastapi-app .
+docker tag my-fastapi-app:latest 836090608262.dkr.ecr.us-east-1.amazonaws.com/my-fastapi-app:latest
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 836090608262.dkr.ecr.us-east-1.amazonaws.com
+docker push 836090608262.dkr.ecr.us-east-1.amazonaws.com/my-fastapi-app:latest
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+```
+
 ### 1. Adicionar um Novo Item (POST)
 
 Para adicionar um novo item à lista:
 ```sh
-curl -X POST "http://127.0.0.1:8000/items/" -H "Content-Type: application/json" -d '{"id": 1, "name": "Item 1", "description": "This is item 1"}'
+curl -X POST "http://a4c687170ef9043c78ff390877622a8a-333739630.us-east-1.elb.amazonaws.com/items/" -H "Content-Type: application/json" -d '{"id": 1, "name": "Item 1", "description": "This is item 1"}'
 ```
 
 ### 2. Tentar Adicionar um Item com Mesmo ID (POST)
 
 Para verificar se a API retorna um erro ao tentar adicionar um item com um ID que já existe:
 ```sh
-curl -X POST "http://127.0.0.1:8000/items/" -H "Content-Type: application/json" -d '{"id": 1, "name": "Another Item 1", "description": "This should fail"}'
+curl -X POST "http://a4c687170ef9043c78ff390877622a8a-333739630.us-east-1.elb.amazonaws.com/items/" -H "Content-Type: application/json" -d '{"id": 1, "name": "Another Item 1", "description": "This should fail"}'
 ```
 
 ### 3. Atualizar um Item Existente (PUT)
@@ -30,14 +47,14 @@ curl -X GET "http://127.0.0.1:8000/items/1"
 
 Para adicionar outro item, com um ID diferente, para garantir que a API continua funcionando corretamente:
 ```sh
-curl -X POST "http://127.0.0.1:8000/items/" -H "Content-Type: application/json" -d '{"id": 2, "name": "Item 2", "description": "This is item 2"}'
+curl -X POST "http://a4c687170ef9043c78ff390877622a8a-333739630.us-east-1.elb.amazonaws.com/items/" -H "Content-Type: application/json" -d '{"id": 2, "name": "Item 2", "description": "This is item 2"}'
 ```
 
 ### 6. Listar Todos os Itens (GET)
 
 Para listar todos os itens e verificar o estado atual do banco de dados em memória:
 ```sh
-curl -X GET "http://127.0.0.1:8000/items/"
+curl -X GET "http://a4c687170ef9043c78ff390877622a8a-333739630.us-east-1.elb.amazonaws.com/items/"
 ```
 
 ### 7. Tentar Atualizar um Item que Não Existe (PUT)
