@@ -4,6 +4,13 @@ source .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt 
 uvicorn main:app --reload
+```
+
+
+```bash
+chmod +x run_local.sh
+./run_local.sh
+
 aws sts get-caller-identity
 eksctl create cluster --name=minimal-cluster --region=us-east-1 --nodegroup-name=minimal-nodes --node-type=t3.micro --nodes=1 --nodes-min=1 --nodes-max=2 --node-volume-size=10 --managed
 aws ecr create-repository --repository-name my-fastapi-app --region us-east-1
@@ -13,6 +20,12 @@ aws ecr get-login-password --region us-east-1 | docker login --username AWS --pa
 docker push 836090608262.dkr.ecr.us-east-1.amazonaws.com/my-fastapi-app:latest
 kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
+kubectl get deployments
+kubectl get services
+
+
+
+
 ```
 
 ### 1. Adicionar um Novo Item (POST)
