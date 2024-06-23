@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: fastapi-app
-        image: 836090608262.dkr.ecr.us-east-1.amazonaws.com/my-fastapi-app:latest
+        image: <your-account>.dkr.ecr.us-east-1.amazonaws.com/my-fastapi-app:latest
         ports:
         - containerPort: 8000
